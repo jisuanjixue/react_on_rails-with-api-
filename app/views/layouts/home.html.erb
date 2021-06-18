@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>dajianyunshu</title>
+    <%= csrf_meta_tags %>
+
+ <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+    <%= stylesheet_link_tag 'home-bundle', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'home-bundle' %>
+    <%= stylesheet_pack_tag 'home-bundle', media: 'all', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
