@@ -8,7 +8,9 @@
 
 启动：
 git clone git@github.com:jisuanjixue/react_on_rails-with-api-.git
+
 bundle
+
 yarn
 
 
