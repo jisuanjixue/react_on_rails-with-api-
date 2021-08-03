@@ -5,11 +5,12 @@ import { getFromLocalStorage } from "../helpers/storage";
 import Layout from "../Home/components/Layout";
 import signUp from '../User/components/SignUp';
 import signIn from '../User/components/SignIn';
-import PrivateRoute from "../common/PrivateRoute";
+// import PrivateRoute from "../common/PrivateRoute";
 import PostList from '../Post/index';
 
 const Routes = () => {
   const authToken = getFromLocalStorage("authToken");
+  console.log(authToken)
   const isLoggedIn = !either(isNil, isEmpty)(authToken) && authToken !== "null";
 
   return (
@@ -34,13 +35,13 @@ const Routes = () => {
         component={signUp}
         exact
       />
-      <PrivateRoute
+      {/* <PrivateRoute
           path="/"
           redirectRoute="/login"
           condition={isLoggedIn}
           location={{}}
-          component={()=> {}}
-        />
+          component={signIn} */}
+        {/* /> */}
     </Switch>
   );
 }

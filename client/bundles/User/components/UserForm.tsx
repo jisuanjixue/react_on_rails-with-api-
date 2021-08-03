@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { FunctionComponent, useState } from 'react';
 import { LockClosedIcon } from '@heroicons/react/solid';
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import apis from '../../../apis';
 import { setToLocalStorage } from '../../helpers/storage'
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
 export interface Props {
   type: string
@@ -13,13 +16,13 @@ export interface Props {
 
 const UserForm: FunctionComponent<Props> = (props: Props) => {
   const { type } = props
-  const [user, getUser] = useState({ email: '', password: '' });
+  const [user, getUser] = useState({ name: '', password: '' });
   const [loading, setLoading] = useState(false);
   let history = useHistory();
 
   const subSave = async (e: any) => {
     e.preventDefault();
-    const tokenUser = { email: user.email, password_digest: user.password, }
+    const tokenUser = { name: user.name, password_digest: user.password, }
     const newUser = { ...tokenUser, role: 1 }
 
     try {
@@ -49,97 +52,110 @@ const UserForm: FunctionComponent<Props> = (props: Props) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">{type === 'in' ? '马 上 登 录' : '注 册 您 的 账 户'}</h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-              {type === 'in' ? '开始您的快乐之旅' : '免费注册'}
-            </a>
-          </p>
-        </div>
-        <form className="mt-8 space-y-6" action="#" method="POST">
-          <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                电子邮箱
-              </label>
+    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
+      <div className="w-full max-w-sm p-6 m-auto bg-white rounded-md shadow-md dark:bg-gray-800">
+        <div className="w-full max-w-md space-y-8">
+          <div className="text-3xl font-semibold text-center text-gray-700 dark:text-white">
+            <img
+              className="w-auto h-12 mx-auto"
+              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+              alt="Workflow"
+            />
+            <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">{type === 'in' ? '马 上 登 录' : '注 册 您 的 账 户'}</h2>
+            <p className="mt-2 text-sm text-center text-gray-600">
+              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                {type === 'in' ? '开始您的快乐之旅' : '免费注册'}
+              </a>
+            </p>
+          </div>
+          <form className="mt-8 space-y-6" action="#" method="POST">
+            <div className="mt-4">
+              <div className="flex items-center justify-between">
+                <label htmlFor="username" className="block text-sm text-gray-800 dark:text-gray-200">用户名</label>
+                {type === 'in' && <Link to="#" className="text-xs text-gray-600 dark:text-gray-400 hover:underline">验证码登录</Link>}
+              </div>
               <input
-                value={user.email}
-                id="email-address"
-                name="email"
-                onChange={e => handChange('email', e)}
-                type="email"
-                autoComplete="email"
+                type="text"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                defaultValue="true"
+                value={user.name}
+                id="name-address"
+                name="name"
+                onChange={e => handChange('name', e)}
+                autoComplete="name"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
               />
             </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                密码
-              </label>
+            <div className="mt-4">
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="block text-sm text-gray-800 dark:text-gray-200">密码</label>
+                {type === 'in' && <Link to="#" className="text-xs text-gray-600 dark:text-gray-400 hover:underline">忘记密码?</Link>}
+              </div>
               <input
+                type="password"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 value={user.password}
                 onChange={e => handChange('password', e)}
                 id="password"
                 name="password"
-                type="password"
                 autoComplete="current-password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
               />
             </div>
-          </div>
-
-          {type === 'in' &&
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember_me"
-                  name="remember_me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
-                <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
-                  记住我
-                </label>
-              </div>
-              <div className="text-sm">
-              <Link to="/users" className="font-medium text-indigo-600 hover:text-indigo-500">
-                没有注册？
-              </Link>
-              </div>
-              <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  忘记密码？
-                </a>
-              </div>
+            <div className="mt-6">
+              <button
+                onClick={e => subSave(e)}
+                type="submit"
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <LockClosedIcon className="w-5 h-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                </span>
+                {type === 'in' ? '登录' : '注册'}
+              </button>
             </div>
+
+          </form>
+          {type === 'in' &&
+            <React.Fragment>
+              <div className="flex items-center justify-between mt-4">
+                <span className="w-1/5 border-b dark:border-gray-600 lg:w-1/5"></span>
+
+                <a href="#" className="text-xs text-center text-gray-500 uppercase dark:text-gray-400 hover:underline">或者其他账号登录</a>
+
+                <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/5"></span>
+              </div>
+              <div className="flex items-center mt-6 -mx-2">
+                <button type="button"
+                  className="flex items-center justify-center w-full px-6 py-2 mx-2 text-sm font-medium text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:bg-blue-400 focus:outline-none">
+                  <svg className="w-4 h-4 mx-2 fill-current" viewBox="0 0 24 24">
+                    <path
+                      d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z">
+                    </path>
+                  </svg>
+
+                  <span className="hidden mx-2 sm:inline">微信登录</span>
+                </button>
+
+                {/* <a href="#"
+                  className="p-2 mx-2 text-sm font-medium text-gray-500 transition-colors duration-200 transform bg-gray-300 rounded-md hover:bg-gray-200">
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path
+                      d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z">
+                    </path>
+                  </svg>
+                </a> */}
+              </div>
+
+              <p className="mt-8 text-xs font-light text-center text-gray-400"> 还没有账号?
+                <Link to="/users" className="font-medium text-gray-800 dark:text-gray-200 hover:underline">
+                  没有注册？
+                </Link>
+              </p>
+            </React.Fragment>
           }
-          <div>
-            <button
-              onClick={(e) => subSave(e)}
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-              </span>
-              {type === 'in'? '登录' : '注册'}
-            </button>
-          </div>
-        </form>
-      </div >
-    </div >
+        </div>
+      </div>
+    </div>
   )
 }
 

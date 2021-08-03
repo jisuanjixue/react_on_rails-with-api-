@@ -1,7 +1,7 @@
 import axios from "axios";
 import Toastr from "../bundles/common/Toastr";
-import {useHistory} from "react-router-dom";
-import {getFromLocalStorage, setToLocalStorage} from "../bundles/helpers/storage";
+import { useHistory } from "react-router-dom";
+import { getFromLocalStorage, setToLocalStorage } from "../bundles/helpers/storage";
 
 
 const handleSuccessResponse = response => {
@@ -19,7 +19,7 @@ const handleErrorResponse = error => {
   if (error.response?.status === 401) {
     setToLocalStorage(null);
   }
-  if(error.response?.status === 403){
+  if (error.response?.status === 403) {
     localStorage.removeItem('token');
     setToLocalStorage(null)
     Toastr.error("登录过期，请重新登录")
@@ -55,7 +55,7 @@ api.defaults.headers = {
  * 请求拦截器 
  * 每次请求前，如果存在token则在请求头中携带token 
  */
- api.interceptors.request.use(
+api.interceptors.request.use(
   config => {
     // 登录流程控制中，根据本地是否存在token判断用户的登录情况        
     // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token        
