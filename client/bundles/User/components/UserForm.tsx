@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { Fragment } from "react-router/node_modules/@types/react";
 
 import apis from "../../../apis";
-import { setToLocalStorage } from "../../helpers/storage";
+import { setToLocalStorage } from "../../../utils/storage";
 
 // function classNames(...classes) {
 //   return classes.filter(Boolean).join(" ");

@@ -1,11 +1,8 @@
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-import Toastr from "../bundles/common/Toastr";
-import {
-  getFromLocalStorage,
-  setToLocalStorage
-} from "../bundles/helpers/storage";
+import Toastr from "../common/Toastr";
+import { getFromLocalStorage, setToLocalStorage } from "../utils/storage";
 
 const handleSuccessResponse = response => {
   if (response) {
@@ -18,6 +15,7 @@ const handleSuccessResponse = response => {
 };
 
 const handleErrorResponse = error => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   let history = useHistory();
   if (error.response?.status === 401) {
     setToLocalStorage(null);
@@ -44,7 +42,10 @@ const handleErrorResponse = error => {
 };
 
 // 创建axios实例
-const api = axios.create({ timeout: 1000 * 12 });
+const api = axios.create({
+  timeout: 1000 * 12,
+  baseURL: "127.0.0.1:3000"
+});
 api.defaults.headers = {
   Accept: "applicaion/json",
   "Content-Type": "application/json",
@@ -65,6 +66,7 @@ api.interceptors.request.use(
     // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码
     // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。
     const token = getFromLocalStorage("token");
+    // eslint-disable-next-line no-console
     console.log(token, "333");
     token && (config.headers.Authorization = token);
     return config;

@@ -3,7 +3,7 @@ import * as React from "react";
 import { either, isEmpty, isNil } from "ramda";
 import { Route, Switch } from "react-router-dom";
 
-import { getFromLocalStorage } from "../helpers/storage";
+import { getFromLocalStorage } from "../../utils/storage";
 import Layout from "../Home/components/Layout";
 import PostList from "../Post";
 import signIn from "../User/components/SignIn";

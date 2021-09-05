@@ -4,7 +4,7 @@ import { useState, FunctionComponent, useEffect } from "react";
 import { isNil, isEmpty, either } from "ramda";
 
 import apis from "../../apis";
-import PageLoader from "../common/PageLoader";
+import PageLoader from "../../common/PageLoader";
 
 const PostList: FunctionComponent = () => {
   const [lists, getLists] = useState([]);
