@@ -23,7 +23,7 @@ const Routes = () => {
       <Route path="/" component={Layout} exact />
       <Route path="/posts" component={PostList} exact />
       <Route path="/signin" component={signIn} exact />
-      <Route path="/users" component={signUp} exact />
+      <Route path="/signup" component={signUp} exact />
       {/* <PrivateRoute
           path="/"
           redirectRoute="/login"

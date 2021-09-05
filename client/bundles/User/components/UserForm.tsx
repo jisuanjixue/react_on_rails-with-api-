@@ -5,6 +5,7 @@ import { FunctionComponent, useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { Fragment } from "react-router/node_modules/@types/react";
 
 import apis from "../../../apis";
 import { setToLocalStorage } from "../../helpers/storage";
@@ -20,13 +21,17 @@ export interface Props {
 
 const UserForm: FunctionComponent<Props> = (props: Props) => {
   const { type } = props;
-  const [user, getUser] = useState({ name: "", password: "" });
+  const [user, getUser] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   let history = useHistory();
 
   const subSave = async (e: any) => {
     e.preventDefault();
-    const tokenUser = { name: user.name, password_digest: user.password };
+    const tokenUser = {
+      name: user.name,
+      password_digest: user.password,
+      email: user.email
+    };
     const newUser = { ...tokenUser, role: 1 };
 
     try {
@@ -79,32 +84,55 @@ const UserForm: FunctionComponent<Props> = (props: Props) => {
             </p>
           </div>
           <form className="mt-8 space-y-6" action="#" method="POST">
+            {type === "up" && (
+              <Fragment>
+                <div className="mt-4">
+                  <div className="flex items-center justify-between">
+                    <label
+                      htmlFor="username"
+                      className="block text-sm text-gray-800 dark:text-gray-200"
+                    >
+                      用户名
+                    </label>
+                  </div>
+                  <input
+                    type="text"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                    defaultValue="true"
+                    value={user.name}
+                    id="name-address"
+                    name="name"
+                    onChange={e => handChange("name", e)}
+                    autoComplete="name"
+                    required
+                  />
+                </div>
+              </Fragment>
+            )}
             <div className="mt-4">
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="username"
                   className="block text-sm text-gray-800 dark:text-gray-200"
                 >
-                  用户名
+                  邮箱
                 </label>
-                {type === "in" && (
-                  <Link
-                    to="#"
-                    className="text-xs text-gray-600 dark:text-gray-400 hover:underline"
-                  >
-                    验证码登录
-                  </Link>
-                )}
+                <Link
+                  to="#"
+                  className="text-xs text-gray-600 dark:text-gray-400 hover:underline"
+                >
+                  验证码登录
+                </Link>
               </div>
               <input
-                type="text"
+                type="email"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 defaultValue="true"
-                value={user.name}
-                id="name-address"
-                name="name"
-                onChange={e => handChange("name", e)}
-                autoComplete="name"
+                value={user.email}
+                id="name-email"
+                name="email"
+                onChange={e => handChange("email", e)}
+                autoComplete="email"
                 required
               />
             </div>
@@ -195,7 +223,7 @@ const UserForm: FunctionComponent<Props> = (props: Props) => {
                 {" "}
                 还没有账号?
                 <Link
-                  to="/users"
+                  to="/signup"
                   className="font-medium text-gray-800 dark:text-gray-200 hover:underline"
                 >
                   没有注册？
