@@ -1,12 +1,10 @@
-import * as React from 'react';
-import { FunctionComponent } from 'react';
-import UserForm from './UserForm';
+import * as React from "react";
+import { FunctionComponent } from "react";
 
- const SignIn: FunctionComponent = () => {
+import UserForm from "./UserForm";
 
-  return (
-    <UserForm type='in' />
-  );
-}
+const SignIn: FunctionComponent = () => {
+  return <UserForm type="in" />;
+};
 
-export default SignIn
+export default SignIn;

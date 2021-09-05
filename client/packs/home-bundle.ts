@@ -1,9 +1,9 @@
-import ReactOnRails from 'react-on-rails'
+import ReactOnRails from "react-on-rails";
+import "stylesheets/application";
 
-import Home from '../bundles/Home/index'
-import "stylesheets/application" ;
+import Home from "../bundles/Home";
 
 // This is how react_on_rails can see the HelloWorld in the browser.
 ReactOnRails.register({
   Home
-})
+});

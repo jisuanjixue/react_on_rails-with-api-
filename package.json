@@ -69,7 +69,7 @@
     }
   },
   "lint-staged": {
-    "client/**/*.{js,jsx,json}": [
+    "client/**/*.{ts,tsx,json,js}": [
       "prettier --write",
       "eslint --fix",
       "git add"
