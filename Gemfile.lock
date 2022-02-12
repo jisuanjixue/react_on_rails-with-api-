@@ -106,7 +106,7 @@ GEM
       libv8-node (~> 15.14.0.0)
     minitest (5.14.4)
     msgpack (1.4.2)
-    nio4r (2.5.7)
+    nio4r (2.5.8)
     nokogiri (1.11.3)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
@@ -114,7 +114,7 @@ GEM
     parser (3.0.2.0)
       ast (~> 2.4.1)
     public_suffix (4.0.6)
-    puma (4.3.7)
+    puma (4.3.11)
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -234,7 +234,7 @@ DEPENDENCIES
   jwt
   listen (~> 3.2)
   mini_racer
-  puma (~> 4.1)
+  puma (~> 4.3)
   rails (~> 6.0.3, >= 6.0.3.1)
   react_on_rails (= 12.2.0)
   rubocop
